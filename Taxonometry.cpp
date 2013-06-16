@@ -6,9 +6,10 @@
 #define CLEAR "clear"
 //#define CLEAR "cls"
 using namespace std;
-/*Класс "ячейка"*/
-typedef char* DataType;
 
+typedef char* DataType;
+//This is just description of BTNode (BT means binary tree in this case) class, which 
+//will have a string of question/answer and two pointers to BTNode.
 class BTNode{
 
 private:
@@ -35,7 +36,7 @@ public:
 	void setpRight(BTNode* _pRight){pRight=_pRight;};
 };
 
-/*Таксонометрическое дерево*/
+/*Let's init a tree with a couple of questions and suggestions*/
 void initTree(BTNode*& root){
 	BTNode *tmp_left=new BTNode("Is it stripy");
 	BTNode *tmp_right=new BTNode("Is it blind");
@@ -54,11 +55,12 @@ void initTree(BTNode*& root){
 	tmp_right->setpLeft(tmp_right_left);
 	tmp_right->setpRight(tmp_right_right);
 }
-/*Не лист?*/
+
 bool isnLeaf(BTNode* root){
 	return (root->getpLeft())||(root->getpRight());
 }
-/*Начать обучение*/
+
+/*So, we don't know the right answer, let's ask a user for it*/
 void start_education(BTNode*& root){
 	char* right_answer = new char[20];
 	char* question = new char[80];
@@ -89,7 +91,7 @@ void start_education(BTNode*& root){
 	root->setpRight(tmp_right);
 }
 
-/*Сохраняемся в файл*/
+/*Save evrything we have in file*/
 void save_the_tree(FILE* f,BTNode *root, char *& s){
 	if(!root)return;
 	char * tmp_str=new char[DEPTH];
@@ -103,7 +105,7 @@ void save_the_tree(FILE* f,BTNode *root, char *& s){
 	save_the_tree(f,root->getpRight(), s);
 }
 
-/*Восстанавливаемся из файла*/
+/*If we have a file data.txt, let's restore information from it*/
 void restore(FILE *f,BTNode * root){
 	while(getc(f)!=EOF){;
 	char *path = new char[DEPTH];
